@@ -3856,3 +3856,210 @@ section.contact-section::before {
 .modal-p5-theme table tbody tr:hover {
     background-color: #f8fafc !important;
 }
+
+html, body {
+    overscroll-behavior-y: none;
+}
+
+#projectModal,
+#projectModal > div,
+.modal-content,
+.modal-body {
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* =========================================================
+   SCROLL & CLEAN MODAL SETUP
+   ========================================================= */
+html {
+    overflow-x: clip !important;
+    overflow-y: auto !important;
+}
+
+body {
+    overflow: visible !important;
+}
+
+body.modal-open-lock {
+    overflow: hidden !important;
+}
+
+/* Efek klik ringan pada tombol View Project Details */
+.btn-project,
+.btn-project-detail {
+    transition: transform 0.18s ease, background 0.25s ease, color 0.25s ease !important;
+}
+
+.btn-project:active,
+.btn-project-detail:active {
+    transform: scale(0.95) !important;
+}
+
+/* =========================================================
+   REFINED 3 + 2 BREATHABLE GRID FOR STEP CARDS (PROJECT 1 & 2)
+   ========================================================= */
+.p1-workflow-grid {
+    display: grid !important;
+    grid-template-columns: repeat(6, 1fr) !important;
+    gap: 14px !important;
+    margin-top: 18px !important;
+}
+
+/* Baris 1: Step 1, 2, 3 masing-masing 2 kolom (total 6) */
+.p1-workflow-grid .p1-step-card:nth-child(1),
+.p1-workflow-grid .p1-step-card:nth-child(2),
+.p1-workflow-grid .p1-step-card:nth-child(3) {
+    grid-column: span 2;
+}
+
+/* Baris 2: Step 4 & 5 masing-masing 3 kolom (total 6, rata penuh) */
+.p1-workflow-grid .p1-step-card:nth-child(4),
+.p1-workflow-grid .p1-step-card:nth-child(5) {
+    grid-column: span 3;
+}
+
+.p1-step-card {
+    padding: 16px 18px !important;
+    background: #F8FBFF !important;
+    border: 1px solid rgba(37, 137, 216, 0.18) !important;
+    border-top: 3px solid #1A73E8 !important;
+    border-radius: 12px !important;
+    transition: transform 0.22s ease, box-shadow 0.22s ease !important;
+}
+
+.p1-step-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(37, 137, 216, 0.1);
+}
+
+.p1-step-card h5 {
+    font-size: 0.92rem !important;
+    margin-bottom: 6px !important;
+}
+
+.p1-step-card p {
+    font-size: 0.82rem !important;
+    line-height: 1.55 !important;
+}
+
+@media (max-width: 768px) {
+    .p1-workflow-grid {
+        grid-template-columns: 1fr !important;
+    }
+    .p1-workflow-grid .p1-step-card {
+        grid-column: span 1 !important;
+    }
+}
+
+/* =========================================================
+   REFINED 3 + 2 BREATHABLE GRID FOR PROJECT 3 WORKFLOW
+   ========================================================= */
+.workflow-stepper {
+    display: grid !important;
+    grid-template-columns: repeat(6, 1fr) !important;
+    gap: 14px !important;
+    margin-top: 18px !important;
+}
+
+/* Baris 1: Langkah 1, 2, 3 masing-masing 2 kolom (total 6) */
+.workflow-stepper .workflow-step-card:nth-child(1),
+.workflow-stepper .workflow-step-card:nth-child(2),
+.workflow-stepper .workflow-step-card:nth-child(3) {
+    grid-column: span 2 !important;
+}
+
+/* Baris 2: Langkah 4 & 5 masing-masing 3 kolom (total 6, rata penuh) */
+.workflow-stepper .workflow-step-card:nth-child(4),
+.workflow-stepper .workflow-step-card:nth-child(5) {
+    grid-column: span 3 !important;
+}
+
+.workflow-step-card {
+    padding: 18px 20px !important;
+    border-radius: 12px !important;
+    transition: transform 0.22s ease, box-shadow 0.22s ease !important;
+}
+
+.workflow-step-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(37, 137, 216, 0.09);
+}
+
+.workflow-step-card h4 {
+    font-size: 0.94rem !important;
+    margin-bottom: 6px !important;
+}
+
+.workflow-step-card p {
+    font-size: 0.83rem !important;
+    line-height: 1.55 !important;
+}
+
+@media (max-width: 768px) {
+    .workflow-stepper {
+        grid-template-columns: 1fr !important;
+    }
+
+    .workflow-stepper .workflow-step-card {
+        grid-column: span 1 !important;
+    }
+}
+
+/* =========================================================
+   ASYMMETRIC BENTO LAYOUT FOR PROJECT 4 OVERVIEW (#p4-sec-a)
+   ========================================================= */
+#p4-sec-a .p4-two-col-cards {
+    display: grid !important;
+    grid-template-columns: repeat(12, 1fr) !important;
+    gap: 16px !important;
+}
+
+/* Baris 1: Background & Problem (5 kolom / ~42%) */
+#p4-sec-a .p4-two-col-cards .p4-subcard:nth-child(1) {
+    grid-column: span 5 !important;
+}
+
+/* Baris 1: System Objectives (7 kolom / ~58%) */
+#p4-sec-a .p4-two-col-cards .p4-subcard:nth-child(2) {
+    grid-column: span 7 !important;
+}
+
+/* Baris 2: Solution Architecture (Lebar penuh 12 kolom) */
+#p4-sec-a .p4-two-col-cards .p4-subcard:nth-child(3) {
+    grid-column: span 12 !important;
+}
+
+/* Baris 3: My Role & Contribution (Lebar penuh 12 kolom + aksen highlight) */
+#p4-sec-a .p4-two-col-cards .p4-subcard:nth-child(4) {
+    grid-column: span 12 !important;
+    background: linear-gradient(135deg, #F0F7FF 0%, #F8FBFF 100%) !important;
+    border: 1px solid rgba(26, 115, 232, 0.25) !important;
+    border-left: 4px solid #1A73E8 !important;
+    border-top: 1px solid rgba(26, 115, 232, 0.25) !important;
+}
+
+#p4-sec-a .p4-subcard {
+    padding: 20px 22px !important;
+    transition: transform 0.22s ease, box-shadow 0.22s ease !important;
+}
+
+#p4-sec-a .p4-subcard:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(26, 115, 232, 0.08);
+}
+
+#p4-sec-a .p4-subcard p,
+#p4-sec-a .p4-bullet-list li {
+    line-height: 1.65 !important;
+}
+
+@media (max-width: 768px) {
+    #p4-sec-a .p4-two-col-cards {
+        grid-template-columns: 1fr !important;
+    }
+
+    #p4-sec-a .p4-two-col-cards .p4-subcard {
+        grid-column: span 1 !important;
+    }
+}

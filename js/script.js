@@ -11,11 +11,36 @@ const projectData = {
             { label: "Planned Sites", value: "82 gNodeB" }
         ],
         workflow: [
-            { step: "1", title: "Area Determination", desc: "Classified Ajibarang District (66.5 km²) as an urban propagation environment." },
-            { step: "2", title: "Parameter Setup", desc: "Defined the 3500 MHz carrier band and target SS-RSRP & SS-SINR KPIs." },
-            { step: "3", title: "Link Budget Calculation", desc: "Computed MAPL/Pathloss, 3D distance (d3D), and 2D cell radius (d2D)." },
-            { step: "4", title: "Site Count Dimensioning", desc: "Calculated and deployed 82 gNodeB sites inside Atoll 3.4." },
-            { step: "5", title: "Simulation Analysis", desc: "Evaluated coverage prediction maps and SS-RSRP / SS-SINR histograms." }
+            {
+                step: "1",
+                icon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
+                title: "Area Determination",
+                desc: "Selected Ajibarang District, Banyumas (66.5 km²), classified as an urban environment."
+            },
+            {
+                step: "2",
+                icon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>`,
+                title: "Parameter Setup",
+                desc: "Defined the 3500 MHz operating frequency and key evaluation parameters, including RSRP and RSRQ."
+            },
+            {
+                step: "3",
+                icon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>`,
+                title: "Link Budget Calculation",
+                desc: "Calculated link budget parameters, including MAPL, path loss, and cell radius, to establish the network planning scenario."
+            },
+            {
+                step: "4",
+                icon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M8 22h8"/><path d="M7.5 7.5a6.5 6.5 0 0 1 9 0"/><path d="M4.5 4.5a11 11 0 0 1 15 0"/><circle cx="12" cy="11" r="2"/></svg>`,
+                title: "Site Count Dimensioning",
+                desc: "Determined the required number of sites through simulation using Atoll 3.4, considering network coverage and deployment efficiency."
+            },
+            {
+                step: "5",
+                icon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>`,
+                title: "Simulation Analysis",
+                desc: "Evaluated coverage performance by analyzing RSRP and SINR results across the planning scenario."
+            }
         ],
         linkBudget: [
             ["gNodeB Transmitter Power", "dBm", "49", "49"],
@@ -469,20 +494,43 @@ let savedScrollY = 0;
 
 function lockBackgroundScroll() {
     savedScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
-    document.documentElement.style.overflow = "hidden";
-    document.body.style.overflow = "hidden";
+    document.body.classList.add("modal-open-lock");
 }
 
 function unlockBackgroundScroll() {
+    document.body.classList.remove("modal-open-lock");
     document.documentElement.style.overflow = "";
     document.body.style.overflow = "";
     
-    // Matikan sementara smooth scroll agar posisi langsung kembali ke Projects
     document.documentElement.style.scrollBehavior = "auto";
     window.scrollTo(0, savedScrollY);
     requestAnimationFrame(() => {
         document.documentElement.style.scrollBehavior = "";
     });
+}
+
+function animateModalOpen(modal) {
+    modal.classList.add("show", "open", "active");
+    modal.style.opacity = "1";
+    modal.style.visibility = "visible";
+    modal.style.pointerEvents = "auto";
+
+    const dialog = modal.querySelector(".modal-content");
+    if (dialog) {
+        dialog.style.opacity = "1";
+        dialog.style.transform = "translateY(0) scale(1)";
+        dialog.animate(
+            [
+                { opacity: 0, transform: "translateY(26px) scale(0.96)" },
+                { opacity: 1, transform: "translateY(0) scale(1)" }
+            ],
+            {
+                duration: 360,
+                easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+                fill: "forwards"
+            }
+        );
+    }
 }
 
 function openModal(projectId) {
@@ -919,7 +967,7 @@ function openModal(projectId) {
             </div>
         `;
 
-        modal.classList.add("show", "open", "active");
+        animateModalOpen(modal);
         lockBackgroundScroll();
         return;
     }
@@ -953,7 +1001,7 @@ function openModal(projectId) {
 
             <!-- 01. SIMULATION OVERVIEW & RF PLANNING WORKFLOW -->
             <div class="report-section">
-                <h3 class="report-sec-title"><span>01</span> Simulation Scope &amp; Planning Workflow</h3>
+                <h3 class="report-sec-title"><span>01</span> Project Overview</h3>
                 <p class="report-text">${data.intro}</p>
                 <div class="p1-workflow-grid">
                     ${data.workflow.map(w => `
@@ -1049,7 +1097,7 @@ function openModal(projectId) {
 
             <!-- 04. ENGINEERING ANALYSIS & OPTIMIZATION INSIGHT -->
             <div class="report-section">
-                <h3 class="report-sec-title"><span>04</span> Engineering Analysis &amp; Optimization</h3>
+                <h3 class="report-sec-title"><span>04</span> Conclusion</h3>
                 <div class="analysis-callout">
                     <p><strong>Simulation Verdict:</strong> ${data.analysis}</p>
                 </div>
@@ -1063,7 +1111,7 @@ function openModal(projectId) {
             </div>
         `;
 
-        modal.classList.add("show", "open", "active");
+        animateModalOpen(modal);
         lockBackgroundScroll();
         return;
     }
@@ -1234,7 +1282,7 @@ function openModal(projectId) {
 
             <!-- 05. FIELD OPTIMIZATION ANALYSIS -->
             <div class="report-section">
-                <h3 class="report-sec-title"><span>05</span> Root-Cause Analysis &amp; Network Findings</h3>
+                <h3 class="report-sec-title"><span>05</span> Root-Cause Analysis</h3>
                 <div class="analysis-callout">
                     <p><strong>Field Audit Verdict:</strong> ${data.analysis}</p>
                 </div>
@@ -1248,7 +1296,7 @@ function openModal(projectId) {
             </div>
         `;
 
-        modal.classList.add("show", "open", "active");
+        animateModalOpen(modal);
         lockBackgroundScroll();
         return;
     }
@@ -1502,33 +1550,54 @@ function openModal(projectId) {
         `;
     }
 
-    modal.classList.add("show", "open", "active");
+    animateModalOpen(modal);
     lockBackgroundScroll();
+    modal.scrollTop = 0;
+    const modalContent = modal.querySelector(".modal-content, .modal-box, .modal-body");
+    if (modalContent) modalContent.scrollTop = 0;
 }
 
 function closeModal(event) {
     if (event) event.preventDefault();
     const modal = document.getElementById("projectModal");
-    if (modal) {
-        // Jeda dan hentikan video YouTube di dalam modal
-        const iframes = modal.querySelectorAll("iframe");
-        iframes.forEach(iframe => {
-            if (iframe.contentWindow) {
-                iframe.contentWindow.postMessage(
-                    JSON.stringify({ event: "command", func: "pauseVideo", args: [] }),
-                    "*"
-                );
-            }
-            iframe.src = "";
-        });
+    if (!modal) return;
 
-        // Jeda juga jika ada tag <video> HTML5
-        const videos = modal.querySelectorAll("video");
-        videos.forEach(video => video.pause());
+    const iframes = modal.querySelectorAll("iframe");
+    iframes.forEach(iframe => {
+        if (iframe.contentWindow) {
+            iframe.contentWindow.postMessage(
+                JSON.stringify({ event: "command", func: "pauseVideo", args: [] }),
+                "*"
+            );
+        }
+        iframe.src = "";
+    });
 
+    const videos = modal.querySelectorAll("video");
+    videos.forEach(video => video.pause());
+
+    const dialog = modal.querySelector(".modal-content");
+    if (dialog) {
+        const closing = dialog.animate(
+            [
+                { opacity: 1, transform: "translateY(0) scale(1)" },
+                { opacity: 0, transform: "translateY(18px) scale(0.97)" }
+            ],
+            { duration: 220, easing: "ease-in", fill: "forwards" }
+        );
+        closing.onfinish = () => {
+            modal.classList.remove("show", "open", "active");
+            modal.style.opacity = "";
+            modal.style.visibility = "";
+            modal.style.pointerEvents = "";
+            modal.scrollTop = 0;
+            dialog.scrollTop = 0;
+            unlockBackgroundScroll();
+        };
+    } else {
         modal.classList.remove("show", "open", "active");
+        unlockBackgroundScroll();
     }
-    unlockBackgroundScroll();
 }
 
 function openTaLightbox(src, caption) {
